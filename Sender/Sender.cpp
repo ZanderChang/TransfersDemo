@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 
 	char tmpBuf[128] = { 0 }; // 接收数据
 	char lenBuf[32] = { 0 }; // 发送数据长度
-	char dataBuf[] = "Secret from sender."; // 发送数据
+	char dataBuf[] = "d29yayUyMGZyb20lMjBob21l"; // 发送数据
 	int sendLen = 0;
 	int recvLen = 0;
 

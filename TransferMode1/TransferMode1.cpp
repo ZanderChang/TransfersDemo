@@ -16,7 +16,7 @@ int listenReceiverPort = 0;
 u_long host = INADDR_ANY;
 
 char* DATA_POINTER = NULL;
-int DATA_LENGTH = -1;
+int DATA_LENGTH = 0;
 HANDLE DATA_LOCK; // 数据锁
 
 void save2log(const char* prefix, const char* format, ...)
@@ -107,10 +107,10 @@ DWORD WINAPI listenSender(LPVOID lpParamter)
 		{
 			WaitForSingleObject(DATA_LOCK, INFINITE); // 等待锁
 
-			if (!(-1 == DATA_LENGTH && NULL == DATA_POINTER))
+			if (!(0 == DATA_LENGTH && NULL == DATA_POINTER))
 			{
 				// 如果上次数据仍然存在则直接将其删除
-				DATA_LENGTH = -1;
+				DATA_LENGTH = 0;
 				if (DATA_POINTER)
 				{
 					free(DATA_POINTER);
@@ -233,7 +233,7 @@ DWORD WINAPI listenReceiver(LPVOID lpParamter)
 				break;
 			}
 
-			if (-1 == DATA_LENGTH && NULL == DATA_POINTER)
+			if (0 == DATA_LENGTH && NULL == DATA_POINTER)
 			{
 				Sleep(2000);
 			}
@@ -258,7 +258,7 @@ DWORD WINAPI listenReceiver(LPVOID lpParamter)
 				// 重置数据
 				free(DATA_POINTER);
 				DATA_POINTER = NULL;
-				DATA_LENGTH = -1;
+				DATA_LENGTH = 0;
 			}
 
 			ReleaseMutex(DATA_LOCK); // 释放锁
